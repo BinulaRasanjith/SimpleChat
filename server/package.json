@@ -4,7 +4,8 @@
   "description": "SimpleChat backend",
   "main": "server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"tsc -w\" \"nodemon -q dist/server.js\""
   },
   "author": "Binula Rasanjith",
   "license": "ISC",
@@ -15,6 +16,7 @@
   "devDependencies": {
     "@types/express": "^4.17.17",
     "@types/node": "^20.6.0",
+    "concurrently": "^8.2.1",
     "typescript": "^5.2.2"
   }
 }
