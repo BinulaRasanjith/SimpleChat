@@ -10,12 +10,14 @@
   "author": "Binula Rasanjith",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "pg": "^8.11.3",
     "sequelize": "^6.33.0"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.17",
     "@types/node": "^20.6.0",
     "concurrently": "^8.2.1",
