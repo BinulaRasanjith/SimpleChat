@@ -7,6 +7,11 @@ import { UserModel } from "../types/model-types";
 const User = sequelize.define<UserModel>(
     "User",
     {
+        id: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+        },
         username: {
             type: DataTypes.STRING,
             allowNull: false,

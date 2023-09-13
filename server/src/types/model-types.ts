@@ -1,6 +1,7 @@
 import { Model } from "sequelize";
 
 interface UserAttributes {
+    id: number,
     username: string;
     passwordHash: string;
     profilePicture: string;
