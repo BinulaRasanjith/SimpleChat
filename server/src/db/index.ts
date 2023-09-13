@@ -10,8 +10,6 @@ const dbPassword: string = process.env.DB_PASSWORD || "password";
 const dbHost: string = process.env.DB_HOST || "localhost";
 const dbDialect: Dialect = process.env.DB_DIALECT as Dialect || "postgres";
 
-console.log(dbname, dbUsername, dbPassword, dbHost, dbDialect);
-
 const sequelize: Sequelize = new Sequelize(
     dbname,
     dbUsername,

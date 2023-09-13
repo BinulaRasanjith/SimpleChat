@@ -7,7 +7,11 @@ export const signup = async (req: Request, res: Response) => {
     const { username, password } = req.body;
 
     try {
-        const user: UserModel = await User.create({ username, passwordHash: password, profilePicture: "" });
+        const user: UserModel = await User.create({
+            username,
+            passwordHash: password,
+            profilePicture: ""
+        });
 
         res.status(201).json(user);
     } catch (error: any) {

@@ -1,7 +1,7 @@
 import { Model } from "sequelize";
 
 interface UserAttributes {
-    id: number,
+    id: number | undefined,
     username: string;
     passwordHash: string;
     profilePicture: string;
