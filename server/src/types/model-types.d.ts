@@ -9,4 +9,5 @@ interface UserAttributes {
 
 export interface UserModel extends Model<UserAttributes>, UserAttributes {
     validPassword: (password: string) => Promise<boolean>;
+    generateToken: () => string;
 }
