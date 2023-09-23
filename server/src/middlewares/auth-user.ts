@@ -8,14 +8,17 @@ export const authJwt = (req: Request, res: Response, next: NextFunction) => {
         { session: false },
         (err: Error, user: any, info: any) => {
             if (err) {
+                // if error occurs
                 console.log(err);
                 return res.status(500).json({ message: 'Something went wrong' });
             }
             if (!user && info && info.name === 'TokenExpiredError') {
-                return res.status(401).json({ message: 'Unauthorized' });
+                // if token expires send status 401 & tokenExpired true
+                return res.status(401).json({ message: 'Unauthorized', tokenExpired: true });
             }
             if (!user && info && info.name === 'JsonWebTokenError') {
-                return res.status(401).json({ message: 'Unauthorized' });
+                // if token is tempered send status 401 & tokenExpired false
+                return res.status(401).json({ message: 'Unauthorized', tokenExpired: false });
             }
             req.user = user;
             return next();

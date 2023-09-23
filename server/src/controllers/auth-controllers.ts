@@ -35,7 +35,9 @@ export const login = async (req: Request, res: Response) => {
             return res.status(401).json({ message: "Invalid password" });
         }
 
-        res.json(user);
+        const token = user.generateToken();
+
+        res.json({ token });
     } catch (error: any) {
         res.status(500).json({ message: error.message });
     }
