@@ -3,6 +3,22 @@ import { Request, Response } from "express";
 import { User } from "../models";
 import { UserModel } from "../types/model-types";
 
+export const checkUsername = async (req: Request, res: Response) => {
+    const { username } = req.params;
+
+    try {
+        const user: UserModel | null = await User.findOne({ where: { username } });
+
+        if (user) {
+            return res.status(409).json({ message: "Username already exists", ok: false });
+        }
+
+        res.status(200).json({ message: "Username available", ok: true });
+    } catch (error: any) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 export const signup = async (req: Request, res: Response) => {
     const { username, password } = req.body;
 
