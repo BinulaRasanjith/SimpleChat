@@ -1,4 +1,4 @@
-import auth from './authApi';
+import auth from './auth-api';
 
 const api = {
     auth,

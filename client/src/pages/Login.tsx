@@ -10,21 +10,54 @@ import {
 	Paper,
 	TextField,
 	Typography,
+	Grow,
 } from "@mui/material";
 import styleProps from "./styleProps";
 import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 import useToast from "../hooks/useToast";
+import api from "../api";
 
 const Login = () => {
 	const { showToast } = useToast();
+
 	const [showPassword, setShowPassword] = useState(false);
+	const [alertData, setAlertData] = useState({
+		show: false,
+		message: "",
+	});
+
+	const [loginData, setLoginData] = useState({
+		username: "",
+		password: "",
+	});
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = e.target;
+		setLoginData({ ...loginData, [name]: value });
+	};
 
 	const handleClickShowPassword = () => setShowPassword(!showPassword);
 
 	const handleSubmit = () => {
-		showToast("Login failed!", "error", 5000);
+		if (!loginData.username || !loginData.password) {
+			setAlertData({ show: true, message: "Please fill in all fields!" });
+			showToast("Please fill in all fields!", "error", 3000);
+			return;
+		}
+
+		api.auth
+			.login(loginData.username, loginData.password)
+			.then((res) => {
+				console.log(res);
+				showToast("Login successful!", "success", 3000);
+			})
+			.catch((err) => {
+				console.log(err);
+				setAlertData({ show: true, message: "Login failed!" });
+				showToast("Login failed!", "error", 3000);
+			});
 	};
 
 	return (
@@ -37,17 +70,21 @@ const Login = () => {
 				</Typography>
 				<TextField
 					id="username"
+					name="username"
 					label="Username"
 					variant="outlined"
+					value={loginData.username}
+					onChange={handleChange}
 					sx={styleProps.formTextfield}
 				/>
 				<FormControl sx={styleProps.formTextfield} variant="outlined">
-					<InputLabel htmlFor="outlined-adornment-password">
-						Password
-					</InputLabel>
+					<InputLabel htmlFor="password">Password</InputLabel>
 					<OutlinedInput
-						id="outlined-adornment-password"
+						id="password"
+						name="password"
 						type={showPassword ? "text" : "password"}
+						value={loginData.password}
+						onChange={handleChange}
 						endAdornment={
 							<InputAdornment position="end">
 								<IconButton
@@ -66,9 +103,11 @@ const Login = () => {
 				<Button variant="contained" onClick={handleSubmit}>
 					Login
 				</Button>
-				<Alert severity="error" variant="standard">
-					Login failed!
-				</Alert>
+				<Grow in={alertData.show}>
+					<Alert severity="error" variant="filled">
+						{alertData.message}
+					</Alert>
+				</Grow>
 			</Paper>
 		</Box>
 	);
